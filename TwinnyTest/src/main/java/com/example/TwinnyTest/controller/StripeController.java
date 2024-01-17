@@ -48,7 +48,7 @@ public class StripeController {
                     invoiceDto.setPaid(inv.getPaid());
                     invoiceDto.setNumber(inv.getNumber());
                     invoiceDto.setAmount(inv.getAmountDue());
-                    invoiceDto.setBillingDate(inv.getDueDate());
+                    invoiceDto.setBillingDate(inv.getStatusTransitions().getFinalizedAt());
                     return invoiceDto;
                 })
                 .collect(Collectors.toList());

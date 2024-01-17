@@ -1,9 +1,9 @@
-package com.example.TwinnyTest.Controller;
+package com.example.TwinnyTest.controller;
 
-import com.example.TwinnyTest.Model.CreateCustomerReq;
-import com.example.TwinnyTest.Model.CustomerDTO;
-import com.example.TwinnyTest.Model.InvoiceDTO;
-import com.example.TwinnyTest.Service.StripeService;
+import com.example.TwinnyTest.model.CreateCustomerReq;
+import com.example.TwinnyTest.model.CustomerDTO;
+import com.example.TwinnyTest.model.InvoiceDTO;
+import com.example.TwinnyTest.service.StripeService;
 import com.stripe.exception.StripeException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/customers")
 @RequiredArgsConstructor
 @Slf4j
-public class TestController {
+public class StripeController {
     private final StripeService stripeService;
 
     @PostMapping("/")

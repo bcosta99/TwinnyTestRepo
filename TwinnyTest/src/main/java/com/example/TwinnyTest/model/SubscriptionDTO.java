@@ -1,4 +1,4 @@
-package com.example.TwinnyTest.Model;
+package com.example.TwinnyTest.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,7 +1,7 @@
-package com.example.TwinnyTest.Service;
+package com.example.TwinnyTest.service;
 
-import com.example.TwinnyTest.Model.CustomerDTO;
-import com.example.TwinnyTest.Model.SubscriptionDTO;
+import com.example.TwinnyTest.model.CustomerDTO;
+import com.example.TwinnyTest.model.SubscriptionDTO;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
 import com.stripe.model.Invoice;
@@ -9,7 +9,6 @@ import com.stripe.model.Subscription;
 import com.stripe.param.CustomerCreateParams;
 import com.stripe.param.InvoiceListParams;
 import com.stripe.param.SubscriptionCreateParams;
-import com.stripe.param.SubscriptionRetrieveParams;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,14 +42,14 @@ public class StripeService extends BaseStripeService {
 
         var subCreateParams = SubscriptionCreateParams
                 .builder()
-                .setCustomer(customer.getId()) // customer.getCustomerId()
+                .setCustomer(customer.getId())
                 .addItem(
                         SubscriptionCreateParams.Item
                                 .builder()
                                 .setPrice(idPrice)
                                 .build()
                 )
-                .setTrialEnd(Instant.now().plusSeconds(15 * 24 * 60 * 60).getEpochSecond())
+                .setTrialEnd(calculateTrialEnd())
                 .build();
 
         Subscription subscription;
@@ -105,10 +104,6 @@ public class StripeService extends BaseStripeService {
         }
     }
 
-    public List<Invoice> retrieveInvoices(String customerId) throws StripeException {
-        return retrieveInvoices(customerId, null);
-    }
-
     public List<Invoice> retrieveInvoices(String customerId, List<String> expandFields) throws StripeException {
         var builder = InvoiceListParams.builder();
         if (expandFields != null) {
@@ -116,21 +111,16 @@ public class StripeService extends BaseStripeService {
         }
         var params = builder.setCustomer(customerId).build();
 
-/*        var params = InvoiceListParams
-                .builder()
-                .setCustomer(customerId)
-                .addAllExpand(expandFields)
-                .build();
- */
-
         try {
-
             return Invoice.list(params)
                     .getData();
-
         } catch(StripeException ex) {
             throw ex;
         }
+    }
+
+    public List<Invoice> retrieveInvoices(String customerId) throws StripeException {
+        return retrieveInvoices(customerId, null);
     }
 
     public void cancelSubscription(String customerId) throws StripeException {
@@ -141,5 +131,9 @@ public class StripeService extends BaseStripeService {
         } catch (StripeException ex) {
             log.error("Could not cancel subscription");
         }
+    }
+
+    private static long calculateTrialEnd() {
+        return Instant.now().plusSeconds(15 * 24 * 60 * 60).getEpochSecond();
     }
 }

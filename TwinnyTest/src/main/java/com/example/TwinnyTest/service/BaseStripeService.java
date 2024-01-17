@@ -1,4 +1,4 @@
-package com.example.TwinnyTest.Service;
+package com.example.TwinnyTest.service;
 
 import com.stripe.Stripe;
 import org.springframework.beans.factory.annotation.Value;

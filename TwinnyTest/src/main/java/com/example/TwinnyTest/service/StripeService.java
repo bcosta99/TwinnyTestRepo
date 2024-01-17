@@ -109,8 +109,8 @@ public class StripeService extends BaseStripeService {
         if (expandFields != null) {
             builder = builder.addAllExpand(expandFields);
         }
-        var params = builder.setCustomer(customerId).build();
 
+        var params = builder.setCustomer(customerId).build();
         try {
             return Invoice.list(params)
                     .getData();

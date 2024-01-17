@@ -1,0 +1,6 @@
+stripe:
+  product:
+    price:
+      id: price_1OP0oiDbmsMlFnNn2P242LNi
+  api:
+    key: sk_test_51NVZ6oDbmsMlFnNnMyr3nyNm1rNgSDasg25xcZamgQ7IwmzRD5JyEZsFzPeCd6jwK3m33SoAbNyczwqp9geBFzOh00vQtuYn0Y
